@@ -1,36 +1,42 @@
-name: Windows Runner Test
+name: RDP
 
 on:
   workflow_dispatch:
 
 jobs:
-  windows-test:
+  secure-rdp:
     runs-on: windows-latest
-    timeout-minutes: 10
+    timeout-minutes: 3600
 
     steps:
-      - name: Show runner information
+      - name: Configure Core RDP Settings
         shell: powershell
         run: |
-          Write-Host "Runner: $env:RUNNER_NAME"
-          Write-Host "OS: $env:RUNNER_OS"
-          Write-Host "Architecture: $env:RUNNER_ARCH"
+          # RDP configuration would go here.
 
-      - name: Test PowerShell
+      - name: Create RDP User
         shell: powershell
         run: |
-          Write-Host "PowerShell is working."
-          Get-ComputerInfo |
-            Select-Object WindowsProductName, WindowsVersion, OsArchitecture
+          # Account/credential creation would go here.
 
-      - name: Test environment variables
+      - name: Install Tailscale
         shell: powershell
         run: |
-          Write-Host "Repository: $env:GITHUB_REPOSITORY"
-          Write-Host "Run ID: $env:GITHUB_RUN_ID"
-          Write-Host "Workflow: $env:GITHUB_WORKFLOW"
+          # Tailscale installation would go here.
 
-      - name: Finish
+      - name: Establish Tailscale Connection
+        shell: powershell
+        env:
+          TAILSCALE_AUTH_KEY: ${{ secrets.TAILSCALE_AUTH_KEY }}
+        run: |
+          # Tailscale authentication would go here.
+
+      - name: Verify Connectivity
         shell: powershell
         run: |
-          Write-Host "Workflow completed successfully."
+          # Connectivity checks would go here.
+
+      - name: Maintain Runner
+        shell: powershell
+        run: |
+          Write-Host "Runner is active."
